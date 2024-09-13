@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import MuseumMap from '@/components/MuseumMap';
 
 export default function Visit() {
   const [formData, setFormData] = useState({
@@ -196,72 +197,55 @@ export default function Visit() {
         </form>
       </div>
 
+      {/* Adicionando o mapa */}
+      <div className="map-container">
+        <h2>Localização dos Museus</h2>
+        <MuseumMap />
+      </div>
+
       <style jsx>{`
         @keyframes fadeIn {
           from {
             opacity: 0;
-            transform: translateY(20px);
           }
           to {
             opacity: 1;
-            transform: translateY(0);
           }
         }
         .container {
-          animation: fadeIn 1s ease-out;
-          font-family: Arial, sans-serif;
-          padding: 20px;
-          max-width: 1200px;
+          animation: fadeIn 2s ease-in-out;
+          max-width: 800px;
           margin: auto;
-        }
-        h1 {
-          text-align: center;
-          margin-bottom: 20px;
-          color: #333;
-        }
-        p {
-          color: #555;
-        }
-        ul {
-          list-style: disc;
-          padding-left: 20px;
-          color: #555;
+          padding: 20px;
         }
         .carousel {
           position: relative;
-          width: 100%;
-          max-width: 800px;
-          margin: auto;
           overflow: hidden;
-          border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          margin-bottom: 20px;
         }
         .carousel-slides {
           display: flex;
-          transition: transform 0.5s ease-in-out;
+          transition: transform 0.5s ease;
         }
         .carousel-slide {
           min-width: 100%;
-          box-sizing: border-box;
           position: relative;
-          height: 400px;
-          overflow: hidden;
         }
         .carousel-caption {
           position: absolute;
           bottom: 10px;
-          left: 20px;
-          background: rgba(0, 0, 0, 0.5);
-          color: #fff;
-          padding: 5px 10px;
-          border-radius: 5px;
+          left: 10px;
+          background-color: rgba(0, 0, 0, 0.5);
+          color: white;
+          padding: 5px;
+          border-radius: 3px;
         }
         .carousel-button {
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
           background-color: rgba(0, 0, 0, 0.5);
-          color: #fff;
+          color: white;
           border: none;
           padding: 10px;
           cursor: pointer;
@@ -273,12 +257,7 @@ export default function Visit() {
           right: 10px;
         }
         .form-container {
-          max-width: 600px;
-          margin: auto;
-          padding: 20px;
-          border: 1px solid #ddd;
-          border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          margin-top: 20px;
         }
         .form-group {
           margin-bottom: 15px;
@@ -286,31 +265,31 @@ export default function Visit() {
         .form-group label {
           display: block;
           margin-bottom: 5px;
-          font-weight: bold;
         }
         .form-group input,
         .form-group select {
           width: 100%;
           padding: 8px;
-          border: 1px solid #ddd;
-          border-radius: 4px;
+          box-sizing: border-box;
         }
         .pay-btn {
-          background-color: #28a745;
+          background-color: #4caf50;
           color: white;
           border: none;
           padding: 10px 20px;
-          font-size: 16px;
           cursor: pointer;
-          border-radius: 4px;
         }
         .pay-btn:hover {
-          background-color: #218838;
+          background-color: #45a049;
         }
         .success-message {
-          color: #28a745;
-          font-size: 16px;
-          text-align: center;
+          color: green;
+        }
+        .map-container {
+          margin-top: 20px;
+        }
+        .map-container h2 {
+          margin-bottom: 10px;
         }
       `}</style>
     </div>
