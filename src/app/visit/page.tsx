@@ -2,7 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import MuseumMap from '@/components/MuseumMap';
+import { TextField, Select, MenuItem, Button, FormControl, InputLabel, Box, Typography } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select';
+
+// Define a fonte EB Garamond
+import '@fontsource/eb-garamond';
 
 export default function Visit() {
   const [formData, setFormData] = useState({
@@ -32,11 +36,14 @@ export default function Visit() {
     return () => clearInterval(slideInterval);
   }, [slides.length]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    if (e.target.name === 'quantidade') {
-      setTotal(Number(e.target.value) * precoTicket);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+    const { name, value } = e.target;
+
+    if (name === 'quantidade') {
+      setTotal(Number(value) * precoTicket);
     }
+
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -70,6 +77,16 @@ export default function Visit() {
     `;
 
     window.open(`https://wa.me/5581999999999?text=${encodeURIComponent(mensagem)}`, '_blank');
+
+    // Limpar o formulário
+    setFormData({
+      nome: '',
+      email: '',
+      data: '',
+      quantidade: '',
+      horario: '',
+    });
+    setTotal(0);
   };
 
   const handlePrevSlide = () => {
@@ -81,217 +98,171 @@ export default function Visit() {
   };
 
   return (
-    <div className="container">
-      <h1>Agendamento de Visita ao Museu Histórico Jacinto de Sousa</h1>
-      <p>
-        O Museu Histórico Jacinto de Sousa, localizado em Quixadá, Ceará, é um espaço dedicado à preservação e valorização da memória cultural do município. Durante sua visita, você poderá:
-      </p>
-      <ul>
-        <li>Explorar a história local e conhecer mais sobre a cultura de Quixadá através do acervo do museu.</li>
-        <li>Admiração da Arquitetura ao observar a estrutura do museu e sua importância histórica.</li>
-        <li>Apreciar o Acervo com exposições de utensílios domésticos, mobiliários, arte sacra, fotografias, documentos e outros artefatos.</li>
-        <li>Enriquecer sua compreensão sobre a vida cotidiana e a produção cultural da região.</li>
-        <li>Utilizar o museu como um recurso educacional para uma melhor compreensão da história e cultura de Quixadá.</li>
-      </ul>
+    <Box
+      p={3}
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      minHeight="100vh"
+      sx={{ 
+        fontFamily: 'EB Garamond, serif', // Aplica a tipografia EB Garamond
+        animation: 'fadeIn 1s ease-in-out', // Animação de surgimento
+        '@keyframes fadeIn': {
+          '0%': { opacity: 0, transform: 'translateY(20px)' },
+          '100%': { opacity: 1, transform: 'translateY(0)' },
+        },
+      }}
+>
+      <Typography
+        variant="h3"
+        gutterBottom
+        sx={{
+          color: '#d4af37', // Tom dourado
+          textAlign: 'center',
+          maxWidth: '80%',
+          fontFamily: 'EB Garamond, serif', // Fonte EB Garamond
+          mb: 2,
+        }}
+      >
+        Se interessou por algum museu? Agende agora sua visita
+      </Typography>
+      <Typography
+        variant="body1"
+        gutterBottom
+        sx={{
+          fontFamily: 'EB Garamond, serif', // Fonte EB Garamond
+          textAlign: 'justify',
+          maxWidth: '70%',
+          mb: 3,
+        }}
+      >
+Sabemos como é importante conhecer fatos históricos de âmbitos nacionais, mas entender a história local é igualmente crucial para uma apreciação mais rica e completa do nosso passado.
+Por isso, esse sistema foi desenvolvido para facilitar o acesso e a exploração de patrimônios culturais e históricos, permitindo que mais pessoas se conectem com a rica tapeçaria do passado de suas comunidades.
+      </Typography>
 
       {/* Carrossel de Slides */}
-      <div className="carousel">
-        <div className="carousel-slides" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
+      <Box className="carousel" sx={{ position: 'relative', width: '100%', maxWidth: '600px', margin: '0 auto', overflow: 'hidden' }}>
+        <Box className="carousel-slides" sx={{ display: 'flex', transition: 'transform 0.5s ease-in-out', transform: `translateX(-${currentSlide * 100}%)` }}>
           {slides.map((slide, index) => (
-            <div key={index} className="carousel-slide">
+            <Box key={index} className="carousel-slide" sx={{ minWidth: '100%', position: 'relative' }}>
               <Image src={slide.src} alt={`Museu Histórico Jacinto de Sousa ${index + 1}`} layout="fill" objectFit="cover" />
-              <div className="carousel-caption">{slide.caption}</div>
-            </div>
+              <Box className="carousel-caption" sx={{ position: 'absolute', bottom: '10px', left: '10px', color: 'white', background: 'rgba(0, 0, 0, 0.5)', padding: '5px' }}>
+                {slide.caption}
+              </Box>
+            </Box>
           ))}
-        </div>
-        <button className="carousel-button prev" onClick={handlePrevSlide}>❮</button>
-        <button className="carousel-button next" onClick={handleNextSlide}>❯</button>
-      </div>
+        </Box>
+        <Button variant="contained" className="carousel-button prev" onClick={handlePrevSlide} sx={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', backgroundColor: 'rgba(0, 0, 0, 0.5)', color: 'white', border: 'none', cursor: 'pointer', left: '10px' }}>❮</Button>
+        <Button variant="contained" className="carousel-button next" onClick={handleNextSlide} sx={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', backgroundColor: 'rgba(0, 0, 0, 0.5)', color: 'white', border: 'none', cursor: 'pointer', right: '10px' }}>❯</Button>
+      </Box>
 
       {/* Formulário de agendamento */}
-      <div className="form-container">
-        <h2>Agende Sua Visita</h2>
-        <form onSubmit={handleSubmit} className="form">
-          <div className="form-group">
-            <label htmlFor="nome">Nome Completo:</label>
-            <input
-              type="text"
-              id="nome"
-              name="nome"
-              value={formData.nome}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email">E-mail:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="data">Data da Visita:</label>
-            <input
-              type="date"
-              id="data"
-              name="data"
-              value={formData.data}
-              onChange={handleChange}
-              required
-              min={new Date().toISOString().split('T')[0]}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="horario">Horário de Visita:</label>
-            <select
-              id="horario"
-              name="horario"
-              value={formData.horario}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Selecione o horário desejado</option>
-              <option value="08:00">08:00</option>
-              <option value="09:00">09:00</option>
-              <option value="10:00">10:00</option>
-              <option value="11:00">11:00</option>
-              <option value="13:00">13:00</option>
-              <option value="14:00">14:00</option>
-              <option value="15:00">15:00</option>
-              <option value="16:00">16:00</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label htmlFor="quantidade">Quantidade de Tickets:</label>
-            <select
-              id="quantidade"
-              name="quantidade"
-              value={formData.quantidade}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Selecione a quantidade desejada</option>
-              <option value="1">1 Ticket</option>
-              <option value="2">2 Tickets</option>
-              <option value="3">3 Tickets</option>
-              <option value="4">4 Tickets</option>
-              <option value="5">5 Tickets</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <p>Total: <strong>R$ {total}</strong></p>
-          </div>
+      <Box component="div" className="form-container" sx={{ padding: '20px', border: '2px solid #d4af37', borderRadius: '10px' }}>
+  <Typography variant="h4" gutterBottom
+    sx={{
+      color: '#d4af37', // Tom dourado
+      maxWidth: '80%',
+      fontFamily: 'EB Garamond, serif', // Fonte EB Garamond
+      mb: 2,
+    }}>
+    Agende Sua Visita
+  </Typography>
+  <form onSubmit={handleSubmit} className="form">
+    <FormControl fullWidth margin="normal">
+      <TextField
+        label="Nome Completo"
+        name="nome"
+        value={formData.nome}
+        onChange={handleChange}
+        required
+      />
+    </FormControl>
+    <FormControl fullWidth margin="normal">
+      <TextField
+        label="E-mail"
+        type="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        required
+      />
+    </FormControl>
+    <FormControl fullWidth margin="normal">
+      <TextField
+        label="Data da Visita"
+        type="date"
+        name="data"
+        value={formData.data}
+        onChange={handleChange}
+        required
+        InputLabelProps={{ shrink: true }}
+        inputProps={{ min: new Date().toISOString().split('T')[0] }}
+      />
+    </FormControl>
+    <FormControl fullWidth margin="normal">
+      <InputLabel id="horario-label">Horário de Visita</InputLabel>
+      <Select
+        labelId="horario-label"
+        name="horario"
+        value={formData.horario}
+        onChange={(e: SelectChangeEvent<string>) => handleChange(e)}
+        required
+      >
+        <MenuItem value="">Selecione o horário desejado</MenuItem>
+        <MenuItem value="08:00">08:00</MenuItem>
+        <MenuItem value="09:00">09:00</MenuItem>
+        <MenuItem value="10:00">10:00</MenuItem>
+        <MenuItem value="11:00">11:00</MenuItem>
+        <MenuItem value="14:00">14:00</MenuItem>
+        <MenuItem value="15:00">15:00</MenuItem>
+        <MenuItem value="16:00">16:00</MenuItem>
+      </Select>
+    </FormControl>
+    <FormControl fullWidth margin="normal">
+      <TextField
+        label="Quantidade de Tickets"
+        type="number"
+        name="quantidade"
+        value={formData.quantidade}
+        onChange={handleChange}
+        required
+        InputProps={{ inputProps: { min: 1 } }}
+      />
+    </FormControl>
+    <Typography variant="h6" gutterBottom>
+      Total: R$ {total}
+    </Typography>
+    <Button
+      type="submit"
+      variant="contained"
+      size="large"
+      fullWidth
+      sx={{
+        backgroundColor: '#f2f2f2', // Cor cinza
+        fontFamily: 'EB Garamond, serif', // Fonte EB Garamond
+        color: '#d4af37', // Cor dourada
+        '&:hover': {
+          backgroundColor: '#000000', // Cor preta ao passar o mouse
+          color: '#ffffff', // Cor branca ao passar o mouse
+        },
+        transition: 'background-color 0.3s ease, color 0.3s ease', // Suaviza a transição de cores
+      }}
+    >
+      Confirmar Agendamento
+    </Button>
+  </form>
+</Box>
 
-          {!pagamentoSimulado ? (
-            <button type="submit" className="pay-btn">
-              Pagar
-            </button>
-          ) : (
-            <p className="success-message">Fale com nossos atendentes para concluir seu agendamento.</p>
-          )}
-        </form>
-      </div>
 
-      {/* Adicionando o mapa */}
-      <div className="map-container">
-        <h2>Localização dos Museus</h2>
-        <MuseumMap />
-      </div>
-
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-        .container {
-          animation: fadeIn 2s ease-in-out;
-          max-width: 800px;
-          margin: auto;
-          padding: 20px;
-        }
-        .carousel {
-          position: relative;
-          overflow: hidden;
-          margin-bottom: 20px;
-        }
-        .carousel-slides {
-          display: flex;
-          transition: transform 0.5s ease;
-        }
-        .carousel-slide {
-          min-width: 100%;
-          position: relative;
-        }
-        .carousel-caption {
-          position: absolute;
-          bottom: 10px;
-          left: 10px;
-          background-color: rgba(0, 0, 0, 0.5);
-          color: white;
-          padding: 5px;
-          border-radius: 3px;
-        }
-        .carousel-button {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          background-color: rgba(0, 0, 0, 0.5);
-          color: white;
-          border: none;
-          padding: 10px;
-          cursor: pointer;
-        }
-        .prev {
-          left: 10px;
-        }
-        .next {
-          right: 10px;
-        }
-        .form-container {
-          margin-top: 20px;
-        }
-        .form-group {
-          margin-bottom: 15px;
-        }
-        .form-group label {
-          display: block;
-          margin-bottom: 5px;
-        }
-        .form-group input,
-        .form-group select {
-          width: 100%;
-          padding: 8px;
-          box-sizing: border-box;
-        }
-        .pay-btn {
-          background-color: #4caf50;
-          color: white;
-          border: none;
-          padding: 10px 20px;
-          cursor: pointer;
-        }
-        .pay-btn:hover {
-          background-color: #45a049;
-        }
-        .success-message {
-          color: green;
-        }
-        .map-container {
-          margin-top: 20px;
-        }
-        .map-container h2 {
-          margin-bottom: 10px;
-        }
-      `}</style>
-    </div>
+      {/* Seção de pagamento simulado */}
+      {pagamentoSimulado && (
+        <Box className="payment-simulation" sx={{ mt: 4, textAlign: 'center' }}>
+          <Typography variant="h6">
+            Simulação de pagamento concluída com sucesso. Por favor, finalize sua compra via WhatsApp.
+          </Typography>
+        </Box>
+      )}
+    </Box>
   );
 }

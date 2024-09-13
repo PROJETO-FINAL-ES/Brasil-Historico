@@ -2,7 +2,7 @@ export const navs = [
     {
       id: 1,
       name: 'Home',
-      link: '/',
+      link: '/home',
       active: true,
     },
     {
@@ -19,13 +19,13 @@ export const navs = [
     },
     {
       id: 4,
-      name: 'Sobre Nós',
+      name: 'Encontre um Museu',
       link: '/about',
       active: false,
     },
     {
       id: 5,
-      name: 'Conheça o Museu Municipal',
+      name: 'Agende uma Visita',
       link: '/visit',
       active: false,
     },
@@ -34,20 +34,24 @@ export const navs = [
   export const scis = [
     {
       id: 1,
-      icon: 'bi-facebook',
-      link: '',
+      icon: 'bi-house-door',  // Ícone para 'Home'
+      link: '/',           // Link para a seção Home
+      label: 'Início'            // Rótulo para o menu
     },
     {
       id: 2,
-      icon: 'bi-twitter-x',
-      link: '',
+      icon: 'bi-info-circle',  // Ícone para 'Sobre Nós'
+      link: '/more',          // Link para a seção Sobre Nós
+      label: 'Sobre Nós'       // Rótulo para o menu
     },
     {
       id: 3,
-      icon: 'bi-instagram',
-      link: '',
+      icon: 'bi-person',       // Ícone para 'Acessar Perfil'
+      link: '/profile',        // Link para a seção Acessar Perfil
+      label: 'Acessar Perfil'  // Rótulo para o menu
     },
   ];
+  
   
   export const heroSlides = [
     {

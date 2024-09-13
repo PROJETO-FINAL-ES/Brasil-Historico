@@ -1,3 +1,5 @@
+"use client"
+
 import { GoogleMap, LoadScript, Marker, InfoWindow } from "@react-google-maps/api";
 import { useState, useEffect, useCallback } from "react";
 import { TextField, CircularProgress } from '@mui/material';
