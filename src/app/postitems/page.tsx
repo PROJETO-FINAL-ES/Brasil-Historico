@@ -2,6 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { Modal, Button } from 'react-bootstrap'; // Usando o Bootstrap para a modal
 
 interface Post {
   _id: string;
@@ -13,6 +16,8 @@ interface Post {
 
 export default function PostItems() {
   const [items, setItems] = useState<Post[]>([]);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [itemToDelete, setItemToDelete] = useState<string | null>(null);
 
   const getItemsData = () => {
     fetch(`/api/postitems`)
@@ -41,26 +46,34 @@ export default function PostItems() {
   };
 
   const handleDelete = async (id: string) => {
-    if (window.confirm('Tem certeza de que deseja excluir este item?')) {
-      try {
-        const response = await fetch(`/api/postitems/${id}`, {
-          method: 'DELETE',
-        });
-        if (response.ok) {
-          // Atualizar a lista após a exclusão
-          setItems(items.filter(item => item._id !== id));
-        } else {
-          const errorData = await response.json();
-          console.error("Erro ao deletar o item:", errorData.message);
-        }
-      } catch (error: unknown) {
-        let errorMessage = 'Erro ao deletar o item';
-        if (error instanceof Error) {
-          errorMessage = error.message;
-        }
-        console.error(errorMessage);
+    try {
+      const response = await fetch(`/api/postitems/${id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        setItems(items.filter((item) => item._id !== id));
+        setShowModal(false); // Fechar a modal após a exclusão
+      } else {
+        const errorData = await response.json();
+        console.error("Erro ao deletar o item:", errorData.message);
       }
+    } catch (error: unknown) {
+      let errorMessage = 'Erro ao deletar o item';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      console.error(errorMessage);
     }
+  };
+
+  const openDeleteModal = (id: string) => {
+    setItemToDelete(id);
+    setShowModal(true);
+  };
+
+  const closeDeleteModal = () => {
+    setShowModal(false);
+    setItemToDelete(null);
   };
 
   return (
@@ -80,19 +93,19 @@ export default function PostItems() {
                       </div>
                     </div>
                   </Link>
-                  <button 
-                    className="btn btn-danger position-absolute top-0 end-0 m-2" 
-                    onClick={() => handleDelete(item._id)}
+                  <button
+                    className="btn-delete position-absolute top-0 end-0 m-2"
+                    onClick={() => openDeleteModal(item._id)}
                     aria-label="Deletar"
                   >
-                    <i className="bi bi-trash"></i>
+                    <DeleteOutlineIcon />
                   </button>
                   <Link href={`/createpostitems/${item._id}`}>
-                    <button 
-                      className="btn btn-primary position-absolute top-0 start-0 m-2"
+                    <button
+                      className="btn-edit position-absolute top-0 start-0 m-2"
                       aria-label="Editar"
                     >
-                      <i className="bi bi-pencil"></i>
+                      <ModeEditIcon />
                     </button>
                   </Link>
                 </div>
@@ -103,6 +116,25 @@ export default function PostItems() {
           </div>
         </section>
       </main>
+
+      {/* Modal de confirmação para exclusão */}
+      <Modal show={showModal} onHide={closeDeleteModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar Exclusão</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Tem certeza de que deseja excluir este post?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeDeleteModal}>
+            Cancelar
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => itemToDelete && handleDelete(itemToDelete)}
+          >
+            Excluir
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       <style jsx>{`
         .container {
@@ -151,6 +183,19 @@ export default function PostItems() {
           font-size: 18px;
           margin: 10px 0;
           color: #333;
+        }
+
+        .btn-edit,
+        .btn-delete {
+          background: none;
+          border: none;
+          color: #d4af37;
+          cursor: pointer;
+        }
+
+        .btn-edit:hover,
+        .btn-delete:hover {
+          color: black;
         }
 
         .btn-primary {

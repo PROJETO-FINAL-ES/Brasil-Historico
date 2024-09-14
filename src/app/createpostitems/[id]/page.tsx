@@ -2,16 +2,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-
-// import AOS
 import AOS from 'aos';
+import { Modal, Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function EditPostItem({ params }: { params: { id: string } }) {
   const id = params.id;
   const router = useRouter();
-
   const [text, setText] = useState<any | {}>({});
-  
+  const [showModal, setShowModal] = useState(false);
+
   const getSinglePostData = () => {
     fetch(`/api/postitems/${id}`)
       .then(res => {
@@ -35,7 +35,6 @@ export default function EditPostItem({ params }: { params: { id: string } }) {
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Simple form validation
     if (
       text.title === '' ||
       text.img === '' ||
@@ -46,7 +45,6 @@ export default function EditPostItem({ params }: { params: { id: string } }) {
       return;
     }
 
-    // POST request
     try {
       const response = await fetch(`/api/postitems/${id}`, {
         method: 'PUT',
@@ -58,15 +56,21 @@ export default function EditPostItem({ params }: { params: { id: string } }) {
 
       setText({ ...text, validate: 'loading' });
 
-      const result = response.status;
-      if (result === 200) {
+      if (response.ok) {
         setText({ ...text, validate: 'success' });
-        console.log('Success:', result);
+        setShowModal(true);
+      } else {
+        setText({ ...text, validate: 'error' });
       }
     } catch (error) {
       setText({ ...text, validate: 'error' });
       console.error('Error:', error);
     }
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+    router.push(`/postitems/${id}`); // Redireciona para a página do post específico
   };
 
   useEffect(() => {
@@ -182,6 +186,19 @@ export default function EditPostItem({ params }: { params: { id: string } }) {
           </div>
         </div>
       </section>
+
+      {/* Modal */}
+      <Modal show={showModal} onHide={handleModalClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Sucesso</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Artigo atualizado com sucesso. Obrigado pela contribuição.</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleModalClose}>
+            Fechar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </main>
   );
 }

@@ -1,3 +1,4 @@
+
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
@@ -15,7 +16,6 @@
 body {
   color: rgba(var(--color-primary-rgb), 1);
   font-family: var(--font-primary);
-  margin-top: 10% !important;
 }
 
 body::-webkit-scrollbar {
@@ -187,4 +187,8 @@ section {
 }
 .mb-4 {
   margin-bottom: 1.5rem !important;
+}
+
+img {
+  object-fit: cover;
 }

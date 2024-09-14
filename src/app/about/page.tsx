@@ -30,6 +30,7 @@ const MuseumMap = dynamic(() => import('@/components/MuseumMap'), { ssr: false }
 
 const MuseumMapPage = () => {
   return (
+    <main id="main">
     <FadeInBox>
       <Typography
         variant="h3" // Tamanho menor para o texto
@@ -64,6 +65,7 @@ const MuseumMapPage = () => {
         <MuseumMap />
       </Box>
     </FadeInBox>
+    </main>
   );
 };
 

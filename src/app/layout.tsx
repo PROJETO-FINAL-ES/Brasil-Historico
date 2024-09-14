@@ -1,25 +1,50 @@
 'use client';
 
+import React, { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
+import { EB_Garamond } from 'next/font/google';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import './globals.css';
+import './variables.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'aos/dist/aos.css';
 
-import { EB_Garamond } from "next/font/google";
-import Header from '@/components/Header';
-import "./globals.css";
-import "./variables.css";
+const ebGaramond = EB_Garamond({ subsets: ['latin'] });
 
-const ebGaramond = EB_Garamond({ subsets: ["latin"] });
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [loading, setLoading] = useState(true);
+  const [showSpinner, setShowSpinner] = useState(false);
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
-  // Conditionally render the Header
+  useEffect(() => {
+    // Simulate loading for demo purposes
+    const timer = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setShowSpinner(false);
+      } else {
+        setShowSpinner(true);
+      }
+    });
+
+    if (sentinelRef.current) {
+      observer.observe(sentinelRef.current);
+    }
+
+    return () => {
+      if (sentinelRef.current) {
+        observer.unobserve(sentinelRef.current);
+      }
+    };
+  }, [sentinelRef]);
+
   const showHeader = pathname !== '/' && pathname !== '/register';
 
   return (
@@ -34,8 +59,11 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Baskervville+SC&display=swap" rel="stylesheet" />
       </head>
       <body className={ebGaramond.className}>
+        
         {showHeader && <Header />}
         {children}
+        <Footer />
+        
       </body>
     </html>
   );

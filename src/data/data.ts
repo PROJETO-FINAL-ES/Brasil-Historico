@@ -35,7 +35,7 @@ export const navs = [
     {
       id: 1,
       icon: 'bi-house-door',  // Ícone para 'Home'
-      link: '/',           // Link para a seção Home
+      link: '/home',           // Link para a seção Home
       label: 'Início'            // Rótulo para o menu
     },
     {
@@ -49,7 +49,15 @@ export const navs = [
       icon: 'bi-person',       // Ícone para 'Acessar Perfil'
       link: '/profile',        // Link para a seção Acessar Perfil
       label: 'Acessar Perfil'  // Rótulo para o menu
+
     },
+    {
+      id: 4,
+      icon : 'bi-calendar',
+      link : '/appointments',
+      label : 'Agendamentos'
+    },
+    
   ];
   
   

@@ -1,10 +1,23 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-// import AOS
 import AOS from 'aos';
+import { Modal, Button } from 'react-bootstrap';
+import { useRouter } from 'next/navigation';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function CreatePostItem() {
+  const router = useRouter(); // Importar useRouter corretamente
+  const [text, setText] = useState({
+    title: '',
+    img: '',
+    category: '',
+    author: '',
+    brief: '',
+    validate: '',
+  });
+  const [showModal, setShowModal] = useState(false);
+
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -14,25 +27,13 @@ export default function CreatePostItem() {
     });
   }, []);
 
-  const intialState = {
-    title: '',
-    img: '',
-    category: '',
-    author: '',
-    brief: '',
-    validate: '',
-  };
-
-  const [text, setText] = useState(intialState);
-
-  const handleTextChange = (e: Event | any) => {
+  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setText({ ...text, [name]: value, validate: '' });
   };
 
-  const handleFormSubmit = async (e: Event | any) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // simple form validation
     if (
       text.title === '' ||
       text.img === '' ||
@@ -43,7 +44,6 @@ export default function CreatePostItem() {
       return;
     }
 
-    // POST request sent
     try {
       const response = await fetch('/api/postitems', {
         method: 'POST',
@@ -55,15 +55,27 @@ export default function CreatePostItem() {
 
       setText({ ...text, validate: 'loading' });
 
-      const result = response.status;
-      if (result === 201) {
+      if (response.ok) {
+        // Opcional: Se a resposta da API inclui um ID, você pode usá-lo para redirecionar para o post específico
+        // const data = await response.json();
+        // const postId = data.id;
+
         setText({ ...text, validate: 'success' });
-        console.log('Success:', result);
+        setShowModal(true);
+
+        // Redireciona para a página /postitems após a modal ser fechada
+      } else {
+        setText({ ...text, validate: 'error' });
       }
     } catch (error) {
       setText({ ...text, validate: 'error' });
       console.error('Error:', error);
     }
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+    router.push('/postitems'); // Redireciona para a página /postitems após o fechamento da modal
   };
 
   return (
@@ -146,11 +158,6 @@ export default function CreatePostItem() {
                             Preencha os campos obrigatórios.
                           </div>
                         )}
-                        {text.validate === 'success' && (
-                          <div className="sent-message">
-                            Sua contribuição foi aceita. Obrigado!
-                          </div>
-                        )}
                         {text.validate === 'error' && (
                           <div className="error-message">Server Error</div>
                         )}
@@ -170,6 +177,19 @@ export default function CreatePostItem() {
           </div>
         </div>
       </section>
+
+      {/* Modal */}
+      <Modal show={showModal} onHide={handleModalClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Sucesso</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Sua contribuição foi aceita. Obrigado!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleModalClose}>
+            Fechar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </main>
   );
 }

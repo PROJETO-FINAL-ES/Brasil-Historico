@@ -1,34 +1,112 @@
-// src/app/profile/page.tsx
-import { getSession } from 'next-auth/react'; // ou a função que retorna a sessão
-import { PrismaClient } from '@prisma/client';
+'use client';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Avatar, Button, Typography, Container, Grid, Card, CardContent } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import LogoutButton from '@/components/LogoutButton';
 
-const prisma = new PrismaClient();
+// Estilize o título usando a cor desejada
+const StyledTitle = styled(Typography)( {
+    color: '#d4af37',
+    fontFamily: '"EB Garamond", serif',
+});
 
-const ProfilePage = async () => {
-  // Obtendo a sessão
-  const session = await getSession();
+// Adicione a fonte EB Garamond via Google Fonts
+const GlobalStyle = styled('style')`
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&display=swap');
+    body {
+        font-family: 'EB Garamond', serif;
+    }
+`;
 
-  if (!session || !session.user || !session.user.email) {
-    return <p>Usuário não autenticado</p>;
-  }
+const Profile = () => {
+    const [user, setUser] = useState({
+        email: '',
+        name: '',
+        bio: '',
+        profilePicture: '' // URL da imagem de perfil
+    });
 
-  // Buscar dados do usuário do banco de dados
-  const user = await prisma.user.findUnique({
-    where: { email: session.user.email }, // Certifique-se de que session.user.email não é null
-  });
+    const router = useRouter();
 
-  if (!user) {
-    return <p>Usuário não encontrado</p>;
-  }
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const response = await fetch('/api/profile', {
+                    method: 'GET',
+                    // Não há mais cabeçalhos de autenticação
+                });
 
-  return (
-    <div>
-      <h1>Perfil</h1>
-      <p>Nome: {user.name}</p>
-      <p>Email: {user.email}</p>
-      {/* Adicione mais campos conforme necessário */}
-    </div>
-  );
+                if (!response.ok) {
+                    const data = await response.json();
+                    alert(`Erro: ${data.message}`);
+                    return;
+                }
+
+                const data = await response.json();
+                setUser(data);
+
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao buscar perfil.');
+            }
+        };
+
+        fetchProfile();
+    }, [router]);
+
+    const handleEditProfile = () => {
+        router.push('/edit-profile');
+    };
+
+    return (
+        <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+            <GlobalStyle />
+            <Card sx={{ maxWidth: 600, width: '100%', backgroundColor: '#f2f2f2' }}>
+                <CardContent>
+                    <Typography variant="h1" gutterBottom component="div">
+                        <StyledTitle>Perfil</StyledTitle>
+                    </Typography>
+                    <Grid container spacing={2} alignItems="center">
+                        <Grid item xs={12} sm={4} md={3}>
+                            <Avatar
+                                src={user.profilePicture}
+                                alt="Foto de perfil"
+                                sx={{ width: 100, height: 100, margin: 'auto' }}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={8} md={9}>
+                            <Typography variant="h6" style={{ fontWeight: 600 }}>
+                                Nome: {user.name}
+                            </Typography>
+                            <Typography variant="body1">Email: {user.email}</Typography>
+                            <Typography variant="body1" paragraph>Bio: {user.bio}</Typography>
+                        </Grid>
+                    </Grid>
+                </CardContent>
+                <Button
+                        variant="contained"
+                        sx={{ 
+                            backgroundColor: '#d4af37', 
+                            color: '#000', 
+                            '&:hover': {
+                                backgroundColor: '#f2f2f2', 
+                                color: '#d4af37'
+                            },
+                            margin: '20px',
+                            display: 'block',
+                            marginLeft: 'auto',
+                            marginRight: 'auto'
+                        }}
+                        onClick={handleEditProfile}
+                    >
+                        Editar Perfil
+                    </Button>
+<LogoutButton />
+                
+            </Card>
+        </Container>
+    );
 };
 
-export default ProfilePage;
+export default Profile;
