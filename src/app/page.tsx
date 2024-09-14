@@ -1,12 +1,18 @@
-import Hero from "@/sections/Hero";
-import Posts from "@/sections/Posts";
+// app/page.tsx
+import { Container, Typography, Button } from '@mui/material';
+import LoginForm from '@/components/LoginForm';
+import Link from 'next/link';
 
-export default function Home() {
+const HomePage = () => {
   return (
-    <main id="main">
-      <Hero />
-      <Posts />
-    </main>
+    <Container>
+      <Typography variant="h4" gutterBottom>Login</Typography>
+      <LoginForm />
+      <Typography variant="body1" gutterBottom>
+        Não tem uma conta? <Link href="/register">Cadastre-se aqui</Link>
+      </Typography>
+    </Container>
   );
- 
-}
+};
+
+export default HomePage;

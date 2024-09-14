@@ -1,8 +1,10 @@
+'use client';
+
+import { usePathname } from 'next/navigation';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'aos/dist/aos.css';
 
-import type { Metadata } from "next";
 import { EB_Garamond } from "next/font/google";
 import Header from '@/components/Header';
 import "./globals.css";
@@ -10,19 +12,16 @@ import "./variables.css";
 
 const ebGaramond = EB_Garamond({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Brasil Histórico",
-  description: "Logo Brasil Histórico",
-  icons: {
-    icon: '/favicon.ico', // Caminho para o favicon
-  },
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+
+  // Conditionally render the Header
+  const showHeader = pathname !== '/' && pathname !== '/register';
+
   return (
     <html lang="en">
       <head>
@@ -35,7 +34,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Baskervville+SC&display=swap" rel="stylesheet" />
       </head>
       <body className={ebGaramond.className}>
-        <Header />
+        {showHeader && <Header />}
         {children}
       </body>
     </html>
