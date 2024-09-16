@@ -1,0 +1,9 @@
+[build]
+  command = "npm run prisma-generate && npm run build"
+  publish = "out"
+
+[[plugins]]
+  package = "@netlify/plugin-cache"
+  [plugins.inputs]
+    cache-dir = "node_modules"
+    ignore = ["node_modules/@prisma/*"]
