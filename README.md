@@ -64,4 +64,18 @@ Para rodar o projeto localmente, siga os passos abaixo:
  ┣ .env.local        # Para acessar os mapas do Museu
  ┣ package.json      # Dependências do projeto
  ┗ README.md         # Documentação do projeto
+```
+
+## 📄Documentação
+>> [Modelos e Arquitetura do Sistema](https://github.com/PROJETO-FINAL-ES/Brasil-Historico/blob/master/Documentos/Modelos%20e%20Arquiteturas%20de%20Software.pdf/)
+>> [Diagrama de Atividades FazerReserva](https://github.com/PROJETO-FINAL-ES/Brasil-Historico/blob/master/Documentos/DiagramaAtividadeFazerReserva.pdf/)
+>> [Levantamento de Requisitos e Histórias de Usuário](https://github.com/PROJETO-FINAL-ES/Brasil-Historico/blob/master/Documentos/Trabalho%20de%20ES%20-%20Pt.1.pdf/)
+
+## 🧪Testes Manuais
+>> [Planilha de Testes Manuais](https://github.com/PROJETO-FINAL-ES/Brasil-Historico/blob/master/Documentos/Planilha%20de%20Testes%20-%20Sheet1.pdf/)
+
+## 🖥️ Contribuintes do projeto
+>> Andressa Colares
+>> Carlos Ryan Santos
+>> Davi José Lima
 
