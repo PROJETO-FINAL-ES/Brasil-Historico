@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "if [ \"$NETLIFY\" != \"true\" ]; then prisma generate; fi && next build",
+    "build": "if [ \"$ON_NETLIFY\" != \"true\" ]; then prisma generate; fi && next build",
     "start": "next start",
     "lint": "next lint"
   },
