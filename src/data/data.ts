@@ -31,34 +31,60 @@ export const navs = [
     },
   ];
   
-  export const scis = [
+export const scis = [
     {
-      id: 1,
-      icon: 'bi-house-door',  // Ícone para 'Home'
-      link: '/home',           // Link para a seção Home
-      label: 'Início'            // Rótulo para o menu
+        id: 1,
+        icon: 'bi-house-door',  // Ícone para 'Home'
+        link: '/home',           // Link para a seção Home
+        label: 'Início'            // Rótulo para o menu
     },
     {
-      id: 2,
-      icon: 'bi-info-circle',  // Ícone para 'Sobre Nós'
-      link: '/more',          // Link para a seção Sobre Nós
-      label: 'Sobre Nós'       // Rótulo para o menu
+        id: 2,
+        icon: 'bi-info-circle',  // Ícone para 'Sobre Nós'
+        link: '/more',          // Link para a seção Sobre Nós
+        label: 'Sobre Nós'       // Rótulo para o menu
     },
     {
-      id: 3,
-      icon: 'bi-person',       // Ícone para 'Acessar Perfil'
-      link: '/profile',        // Link para a seção Acessar Perfil
-      label: 'Acessar Perfil'  // Rótulo para o menu
+        id: 3,
+        icon: 'bi-person',       // Ícone para 'Acessar Perfil'
+        link: '/profile',        // Link para a seção Acessar Perfil
+        label: 'Acessar Perfil'  // Rótulo para o menu
 
     },
     {
-      id: 4,
-      icon : 'bi-calendar',
-      link : '/appointments',
-      label : 'Agendamentos'
+        id: 4,
+        icon : 'bi-calendar',
+        link : '/appointments',
+        label : 'Agendamentos'
     },
-    
-  ];
+];
+
+export const scis_mobile = [
+      {
+        id: 5,
+        icon: 'bi-newspaper',
+        label: 'Artigos',
+        link: '/postitems',
+      },
+      {
+        id: 6,
+        icon: 'bi-send-fill',
+        label: 'Criar Artigo',
+        link: '/createpostitems',
+      },
+      {
+        id: 7,
+        icon: 'bi-binoculars-fill',
+        label: 'Encontre um Museu',
+        link: '/about',
+      },
+      {
+        id: 8,
+        icon: 'bi-alarm',
+        label: 'Agende uma Visita',
+        link: '/visit',
+      },
+];
   
   
   export const heroSlides = [

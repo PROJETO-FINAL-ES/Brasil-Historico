@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './sci.css';
-import { scis } from '@/data/data';
+import { scis, scis_mobile } from '@/data/data';
 
 export default function Sci() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,6 +20,17 @@ export default function Sci() {
       <div className={`side-menu ${isMenuOpen ? 'open' : ''}`}>
         <ul>
           {scis.map(sci => (
+            <li key={sci.id}>
+              <a href={sci.link} className="menu-item">
+                <i className={`bi ${sci.icon}`}></i> {/* Ícone */}
+                <span className="menu-label">{sci.label}</span> {/* Rótulo */}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <ul className="scis-mobile">
+        {scis_mobile.map(sci => (
             <li key={sci.id}>
               <a href={sci.link} className="menu-item">
                 <i className={`bi ${sci.icon}`}></i> {/* Ícone */}
