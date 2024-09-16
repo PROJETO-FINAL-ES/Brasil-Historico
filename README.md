@@ -3,7 +3,7 @@
 **Brasil Histórico** é uma plataforma de artigos focada em eventos, personagens e períodos importantes da história do Brasil. Com uma experiência interativa e visualmente atraente, buscamos proporcionar um ambiente de aprendizado acessível para todos os interessados na história do país.
 
 ## 🌐 Acesse o Site
-[Visite Brasil Histórico](https://brasil-historico.netlify.app/)
+[Visite Brasil Histórico]((https://digital-news-app-one.vercel.app/)/)
 
 ## 🎯 Propósito
 
