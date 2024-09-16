@@ -55,10 +55,6 @@ const Profile = () => {
         fetchProfile();
     }, [router]);
 
-    const handleEditProfile = () => {
-        router.push('/edit-profile');
-    };
-
     return (
         <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
             <GlobalStyle />
@@ -84,24 +80,7 @@ const Profile = () => {
                         </Grid>
                     </Grid>
                 </CardContent>
-                <Button
-                        variant="contained"
-                        sx={{ 
-                            backgroundColor: '#d4af37', 
-                            color: '#000', 
-                            '&:hover': {
-                                backgroundColor: '#f2f2f2', 
-                                color: '#d4af37'
-                            },
-                            margin: '20px',
-                            display: 'block',
-                            marginLeft: 'auto',
-                            marginRight: 'auto'
-                        }}
-                        onClick={handleEditProfile}
-                    >
-                        Editar Perfil
-                    </Button>
+                
 <LogoutButton />
                 
             </Card>

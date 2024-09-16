@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
-    "prisma-generate": "prisma generate", 
+    "prisma-generate": "prisma generate",
     "start": "next start",
     "lint": "next lint"
   },
@@ -46,6 +46,7 @@
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18",
     "react-router-dom": "^6.26.1",
+    "serve": "^14.2.3",
     "styled-components": "^6.1.13",
     "swiper": "^11.1.10"
   },
