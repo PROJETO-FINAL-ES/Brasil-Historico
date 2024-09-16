@@ -30,7 +30,10 @@ const MuseumMap = dynamic(() => import('@/components/MuseumMap'), { ssr: false }
 
 const MuseumMapPage = () => {
   return (
-    <main id="main">
+    <main
+        id="main"
+        style={{ height: '80rem' }}
+        >
     <FadeInBox>
       <Typography
         variant="h3" // Tamanho menor para o texto
