@@ -3,7 +3,4 @@
   publish = "out"
 
 [[plugins]]
-  package = "@netlify/plugin-cache"
-  [plugins.inputs]
-    cache-dir = "node_modules"
-    ignore = ["node_modules/@prisma/*"]
+  package = "@netlify/plugin-nextjs"
