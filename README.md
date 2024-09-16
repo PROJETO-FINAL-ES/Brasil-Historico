@@ -33,23 +33,22 @@ Nosso objetivo é apresentar a história do Brasil de forma clara, educativa e v
 Para rodar o projeto localmente, siga os passos abaixo:
 
 1. Clone este repositório:
-   ```bash```
-   git clone https://github.com/seuusuario/brasil-historico.git
+  - ``git clone https://github.com/seuusuario/brasil-historico.git``
 2. Acesse o diretório do projeto:
-```cd brasil-historico```
+- ```cd brasil-historico```
 3. Instale as dependências
-   ```npm install```
+-  ```npm install```
 4. Configure as variáveis de ambiente. Crie um arquivo ```.env``` na raiz do projeto com as seguintes variáveis:
-  `` MONGO_URL = mongodb+srv://andressacolares133:kmSoSQxQtmn0WnKH@digital-news-data.el38c.mongodb.net/digital-news``
- `` DATABASE_URL = mongodb+srv://andressacolares133:kmSoSQxQtmn0WnKH@digital-news-data.el38c.mongodb.net/digital-news``
+- `` MONGO_URL = mongodb+srv://andressacolares133:kmSoSQxQtmn0WnKH@digital-news-data.el38c.mongodb.net/digital-news``
+- `` DATABASE_URL = mongodb+srv://andressacolares133:kmSoSQxQtmn0WnKH@digital-news-data.el38c.mongodb.net/digital-news``
 5. Crie um arquivo ``.env.local`` para testar os mapas
-   ``NEXT_PUBLIC_GOOGLE_MAPS_API_KEY = AIzaSyD9Ld3LrAXSo477v166zHF8lhfdhTci7O4``
+- ``NEXT_PUBLIC_GOOGLE_MAPS_API_KEY = AIzaSyD9Ld3LrAXSo477v166zHF8lhfdhTci7O4``
 6. Configure o Prisma e o banco de dados:
-  ``npx prisma migrate dev``
+- ``npx prisma migrate dev``
 7. Inicie o servidor de desenvolvimento:
-   ``npm run dev``
+- ``npm run dev``
 8. Acesse o projeto no navegador:
-   ``http://localhost:3000``
+- ``http://localhost:3000``
 ## 🎨 Estrutura do Projeto
 
 ```bash
