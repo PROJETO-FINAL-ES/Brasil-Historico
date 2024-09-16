@@ -7,7 +7,7 @@
 
 ## 🎯 Propósito
 
-Nosso objetivo é apresentar a história do Brasil de forma clara, educativa e visual, por meio de artigos bem pesquisados e interações com mapas históricos. O **Brasil Histórico** busca ser uma ferramenta valiosa tanto para estudantes quanto para entusiastas da história, oferecendo informações de fácil acesso e continuamente atualizadas.
+Nosso objetivo é apresentar a história do Brasil de forma clara, educativa e visual, por meio de artigos  e interações com mapas de museus brasileiros. O **Brasil Histórico** busca ser uma ferramenta valiosa tanto para estudantes quanto para entusiastas da história, oferecendo informações de fácil acesso e continuamente atualizadas.
 
 ## 🚀 Funcionalidades
 
