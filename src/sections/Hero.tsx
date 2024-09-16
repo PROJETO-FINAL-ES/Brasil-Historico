@@ -58,8 +58,8 @@ export default function Hero() {
                 loop={true }
                 className='sliderFeaturedPosts'      
               >
-                {heroSlides.map(slide=>(
-                  <SwiperSlide>
+                {heroSlides.map((slide, index) =>(
+                  <SwiperSlide key={index}>
                     <HeroSlide slide={slide}/>
                   </SwiperSlide>
                 ))}

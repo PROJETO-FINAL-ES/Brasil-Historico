@@ -192,3 +192,18 @@ section {
 img {
   object-fit: cover;
 }
+
+.scis-mobile {
+    display: none; /* Esconde o elemento por padrão */
+}
+
+@media (max-width: 1000px) {
+    .scis-mobile  {
+        display: block; /* Exibe o elemento */
+    }
+
+    .side-menu.open {
+        overflow-y: auto;
+        padding-bottom: 5rem;
+    }
+}
